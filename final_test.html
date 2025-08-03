@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Happy Birthday Barsa 🎂</title>
+    <link rel="icon" href="C:\Users\hp\Desktop\BARSA\WhatsApp Image 2025-08-03 at 13.21.52_70094e10.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="C:\Users\hp\Desktop\BARSA\WhatsApp Image 2025-08-03 at 13.21.52_70094e10.jpg" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom right, #ffe6f0, #fff0f5); /* Initial gradient */
+            background-size: 400% 400%; /* For animation */
+            animation: gradientAnimation 15s ease infinite; /* Animated background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow-x: hidden; /* Prevent horizontal scroll from balloons */
+        }
+
+        #countdown {
+            font-size: 1.5rem;
+            color: #e6005c;
+            padding: 15px;
+            background-color: #fff4f8;
+            border-bottom: 2px solid #ffccdd;
+        }
+
+        #lockScreen h1 {
+            padding-top: 20px;
+        }
+
+        header {
+            padding: 20px;
+            background: #ffccdd;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .message {
+            padding: 20px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            animation: fadeIn 3s;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        .heart-button, .music-button { /* Combined styles for similar buttons */
+            background-color: #ff69b4;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 0 15px #ff69b4, 0 0 30px #ff1493;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            margin-bottom: 20px; /* Added some space below buttons */
+        }
+
+        .heart-button:hover, .music-button:hover {
+            box-shadow: 0 0 20px #ff1493, 0 0 40px #ff69b4;
+            transform: scale(1.05);
+        }
+
+        .sketch-surprise {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 2s;
+        }
+
+        .sketch-surprise img {
+            width: 60%;
+            max-width: 300px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+
+        .apology {
+            font-size: 1rem;
+            margin-top: 15px;
+            color: #666;
+        }
+
+        .back-button {
+            background-color: #f0f0f0;
+            color: #333;
+            font-size: 0.9rem;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Allows clicks to pass through */
+            z-index: 9999;
+        }
+
+        /* Balloon Animations */
+        .balloon-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden; /* Important to clip balloons outside */
+            z-index: 999;
+        }
+        .balloon {
+            position: absolute;
+            bottom: -150px; /* Start below the viewport */
+            width: 80px;
+            height: 100px;
+            background-color: #ff69b4; /* Pink */
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: center bottom;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2);
+            animation: floatUp 10s ease-in-out infinite;
+        }
+        .balloon::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -10px;
+            width: 10px;
+            height: 20px;
+            background: #ff69b4;
+            border-radius: 50%;
+        }
+        .balloon::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -40px;
+            width: 2px;
+            height: 30px;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 0 0 50% 50%;
+        }
+        .balloon:nth-child(2) { background-color: #ffd700; left: 15%; animation-delay: 1s; animation-duration: 9s; } /* Gold */
+        .balloon:nth-child(3) { background-color: #8a2be2; left: 30%; animation-delay: 2s; animation-duration: 11s; } /* BlueViolet */
+        .balloon:nth-child(4) { background-color: #00ced1; left: 45%; animation-delay: 0.5s; animation-duration: 10.5s; } /* DarkTurquoise */
+        .balloon:nth-child(5) { background-color: #ff4500; left: 60%; animation-delay: 1.5s; animation-duration: 9.5s; } /* OrangeRed */
+        .balloon:nth-child(6) { background-color: #da70d6; left: 75%; animation-delay: 2.5s; animation-duration: 12s; } /* Orchid */
+        .balloon:nth-child(7) { background-color: #32cd32; left: 90%; animation-delay: 0s; animation-duration: 8s; } /* LimeGreen */
+
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #888;
+            padding-bottom: 30px;
+        }
+
+        .hide {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="balloon-container" id="balloonContainer"></div>
+
+    <audio id="birthdaySong" src="C:\Users\hp\Downloads\happy-birthday-334876.mp3" preload="auto" loop></audio>
+
+    <div id="lockScreen">
+        <h1>⏳ Hello, Cutie!🫠👀✨</h1>
+        <div id="countdown">Loading...</div>
+    </div>
+
+    <header id="header" class="hide">🎉 Happy Birthday Barsa! 🎉</header>
+
+    <div class="message hide" id="message">
+        You’re one of the kindest and most beautiful souls I’ve ever known.
+        <br><br>
+        Today is all about celebrating YOU — your smile, your laugh, your vibes 💫
+        <br><br>
+        I hope this small surprise brings a little joy to your heart. ☺️💖
+    </div>
+
+    <button class="music-button hide" id="playMusicBtn" onclick="togglePlayPauseMusic()">🎶 Play Music 🎶</button>
+
+    <div class="gallery hide" id="gallery">
+       <img src="C:\Users\hp\Desktop\BIRTHDAY\WhatsApp Image 2025-08-02 at 12.57.46_23656fc8.jpg" />
+    <img src="C:\Users\hp\Desktop\BARSA\WhatsApp Image 2025-08-02 at 12.57.46_4d6e3d67.jpg" />
+    <img src="C:\Users\hp\Desktop\BARSA\WhatsApp Image 2025-08-02 at 12.57.48_58b2c449.jpg" />
+    <img src="C:\Users\hp\Desktop\BARSA\WhatsApp Image 2025-08-02 at 12.57.47_2aa6e1ee.jpg"/>
+    <img src="C:\Users\hp\Desktop\BARSA\WhatsApp Image 2025-08-02 at 12.57.47_2cd89600.jpg" />
+    <img src="C:\Users\hp\Desktop\BARSA\WhatsApp Image 2025-08-02 at 12.57.47_3b6bb24c.jpg" />
+  </div>
+    <button class="heart-button hide" id="surpriseBtn" onclick="revealSketch()">💖 Tap Here For Your Surprise Gift 💖</button>
+
+    <div class="sketch-surprise" id="sketchSection">
+        <h3>A Little Surprise For You. 🫠🙃🎨</h3>
+        <img src="C:\Users\hp\Desktop\BARSA\WhatsApp Image 2025-08-02 at 12.57.50_8e96c632.jpg" />
+    <img src="C:\Users\hp\Desktop\BARSA\WhatsApp Image 2025-08-02 at 12.57.51_f665e51b.jpg" />
+        <p class="apology">
+            I know it's not perfect… but I drew it just for you. I tried my best with all my heart.
+            I'm sorry if it's not good enough — I just hope it makes you smile, even a little. 🙈🫀😌🖤
+        </p>
+        <button class="back-button" onclick="goBackToMain()">Go Back</button>
+    </div>
+
+    <footer class="hide" id="footer">Made with love 💌 — someone who thinks you’re really special</footer>
+
+    <script>
+        // Set the birthday to August 7, 2025
+        const birthday = new Date("August 7, 2025 00:00:00").getTime();
+        const countdownEl = document.getElementById("countdown");
+        const birthdaySong = document.getElementById("birthdaySong");
+        const playMusicBtn = document.getElementById("playMusicBtn");
+
+        // Global variables for animation control
+        let confettiAnimationId;
+        let balloonElements = [];
+        let isMusicPlaying = false; // Track music state
+
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const diff = birthday - now;
+
+            // FOR TESTING: Uncomment the line below to immediately unlock for testing purposes
+            // const diff = -1; // Simulates time past birthday for testing
+
+            if (diff < 0) {
+                clearInterval(timer);
+                unlockPage();
+            } else {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / 1000 / 60) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+
+                countdownEl.innerHTML =
+                    `Hurry!!🎉🎊 Only ${days}d ${hours}h ${minutes}m ${seconds}s is left🎉
+                    <h3>Open it on Your special Day.✨<h3>`;
+            }
+        }, 1000);
+
+        function unlockPage() {
+            document.getElementById("lockScreen").style.display = "none";
+            document.getElementById("header").classList.remove("hide");
+            document.getElementById("message").classList.remove("hide");
+            document.getElementById("playMusicBtn").classList.remove("hide"); // Show music button
+            document.getElementById("gallery").classList.remove("hide");
+            document.getElementById("surpriseBtn").classList.remove("hide");
+            document.getElementById("footer").classList.remove("hide");
+
+            // Launch animations (music is now played via button)
+            launchConfetti();
+            createBalloons();
+        }
+
+        function revealSketch() {
+            // Hide main content
+            document.getElementById("header").classList.add("hide");
+            document.getElementById("message").classList.add("hide");
+            document.getElementById("playMusicBtn").classList.add("hide"); // Hide music button
+            document.getElementById("gallery").classList.add("hide");
+            document.getElementById("surpriseBtn").classList.add("hide");
+            document.getElementById("footer").classList.add("hide");
+
+            // Show sketch section
+            document.getElementById("sketchSection").style.display = "block";
+
+            // Stop confetti and balloons for a cleaner look on the sketch page
+            clearConfetti();
+            clearBalloons();
+            pauseBirthdaySong(); // Pause music when sketch is shown
+        }
+
+        function goBackToMain() {
+            // Hide sketch section
+            document.getElementById("sketchSection").style.display = "none";
+
+            // Show main content again
+            document.getElementById("header").classList.remove("hide");
+            document.getElementById("message").classList.remove("hide");
+            document.getElementById("playMusicBtn").classList.remove("hide"); // Show music button
+            document.getElementById("gallery").classList.remove("hide");
+            document.getElementById("surpriseBtn").classList.remove("hide");
+            document.getElementById("footer").classList.remove("hide");
+
+            // Restart animations and music
+            launchConfetti();
+            createBalloons();
+            playBirthdaySong(); // Resume music when returning to main
+        }
+
+        // --- Audio Control ---
+        function togglePlayPauseMusic() {
+            if (isMusicPlaying) {
+                pauseBirthdaySong();
+            } else {
+                playBirthdaySong();
+            }
+        }
+
+        function playBirthdaySong() {
+            birthdaySong.play()
+                .then(() => {
+                    isMusicPlaying = true;
+                    playMusicBtn.textContent = "⏸️ Pause Music";
+                })
+                .catch(e => console.log("Music play prevented or failed:", e));
+        }
+
+        function pauseBirthdaySong() {
+            birthdaySong.pause();
+            isMusicPlaying = false;
+            playMusicBtn.textContent = "🎶 Play Music 🎶";
+        }
+
+        // --- Confetti Logic ---
+        const confettiCanvas = document.getElementById('confetti-canvas');
+        const confettiCtx = confettiCanvas.getContext('2d');
+        let confettiPieces = [];
+
+        function resizeConfettiCanvas() {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeConfettiCanvas); // Make canvas responsive
+
+        function random(min, max) { return Math.random() * (max - min) + min; }
+
+        class Confetti {
+            constructor() {
+                this.x = random(0, confettiCanvas.width);
+                this.y = random(0, -confettiCanvas.height); // Start above viewport
+                this.size = random(5, 15);
+                this.color = `hsl(${random(0, 360)}, 100%, 70%)`;
+                this.rotation = random(0, 360);
+                this.speed = random(2, 5);
+                this.opacity = random(0.5, 1);
+            }
+            update() {
+                this.y += this.speed;
+                if (this.y > confettiCanvas.height) {
+                    this.y = random(0, -20); // Reset above viewport
+                    this.x = random(0, confettiCanvas.width);
+                }
+            }
+            draw() {
+                confettiCtx.save();
+                confettiCtx.translate(this.x, this.y);
+                confettiCtx.rotate(this.rotation * Math.PI / 180);
+                confettiCtx.fillStyle = this.color;
+                confettiCtx.globalAlpha = this.opacity;
+                confettiCtx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                confettiCtx.restore();
+            }
+        }
+
+        function animateConfetti() {
+            confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            confettiPieces.forEach(c => {
+                c.update();
+                c.draw();
+            });
+            confettiAnimationId = requestAnimationFrame(animateConfetti);
+        }
+
+        function launchConfetti() {
+            resizeConfettiCanvas(); // Ensure canvas is sized correctly
+            confettiPieces = []; // Clear existing for a fresh launch
+            for (let i = 0; i < 100; i++) { // Number of confetti pieces
+                confettiPieces.push(new Confetti());
+            }
+            if (!confettiAnimationId) { // Only start if not already running
+                animateConfetti();
+            }
+        }
+
+        function clearConfetti() {
+            cancelAnimationFrame(confettiAnimationId);
+            confettiAnimationId = null;
+            confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            confettiPieces = []; // Clear pieces
+        }
+
+        // --- Balloons Logic ---
+        const balloonContainer = document.getElementById('balloonContainer');
+
+        function createBalloons() {
+            clearBalloons(); // Clear existing balloons before creating new ones
+            const numBalloons = 7; // You can adjust this
+
+            for (let i = 0; i < numBalloons; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = `${Math.random() * 90}%`; // Random horizontal position
+                balloon.style.animationDelay = `${Math.random() * 3}s`; // Stagger animation start
+                balloon.style.animationDuration = `${Math.random() * 5 + 8}s`; // Random duration
+                balloonContainer.appendChild(balloon);
+                balloonElements.push(balloon); // Store reference to clear later
+            }
+        }
+
+        function clearBalloons() {
+            // Remove all balloon elements from the DOM
+            balloonElements.forEach(balloon => balloon.remove());
+            balloonElements = []; // Clear the array
+        }
+    </script>
+</body>
+</html>
